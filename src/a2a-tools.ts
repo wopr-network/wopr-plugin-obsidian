@@ -28,7 +28,11 @@ export function buildA2ATools(client: ObsidianClient) {
         const { query, limit = 5 } = args as { query: string; limit?: number };
         try {
           const results = await client.search(query);
-          return ok(results.slice(0, limit).map((r) => ({ path: r.filename, score: r.score, context: r.matches[0]?.context ?? "" })));
+          return ok(
+            results
+              .slice(0, limit)
+              .map((r) => ({ path: r.filename, score: r.score, context: r.matches[0]?.context ?? "" })),
+          );
         } catch (error: unknown) {
           return err(error);
         }
