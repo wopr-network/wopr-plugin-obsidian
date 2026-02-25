@@ -5,7 +5,13 @@
     "enabled": true,
     "rules": {
       "recommended": true,
-      "suspicious": { "noExplicitAny": "error" }
+      "suspicious": {
+        "noConsole": {
+          "level": "error",
+          "options": {
+            "allow": ["warn", "error", "info"]
+          }
+        }, "noExplicitAny": "error" }
     }
   },
   "formatter": {
