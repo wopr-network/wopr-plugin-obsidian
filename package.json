@@ -28,5 +28,5 @@
   },
   "publishConfig": { "access": "public" },
   "files": ["dist"],
-  "keywords": ["wopr", "plugin", "obsidian", "notes", "vault", "memory", "pkm"]
+  "keywords": ["wopr", "wopr-plugin", "plugin", "obsidian", "notes", "vault", "memory", "pkm"]
 }

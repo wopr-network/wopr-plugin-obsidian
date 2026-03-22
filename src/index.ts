@@ -211,21 +211,21 @@ const plugin: WOPRPlugin = {
           const cfg = cmdCtx.getConfig<ObsidianConfig>();
           const c = new ObsidianClient(cfg.port ?? 27123, cfg.apiKey ?? "");
           const ok = await c.ping();
-          console.log(`Obsidian: ${ok ? "✓ connected" : "✗ not reachable"}`);
-          console.log(`  Port:    ${cfg.port ?? 27123}`);
-          console.log(`  Vault:   ${cfg.vaultPath ?? "WOPR"}`);
+          console.info(`Obsidian: ${ok ? "✓ connected" : "✗ not reachable"}`);
+          console.info(`  Port:    ${cfg.port ?? 27123}`);
+          console.info(`  Vault:   ${cfg.vaultPath ?? "WOPR"}`);
           process.exit(ok ? 0 : 1);
         }
 
         if (sub === "test") {
           const cfg = cmdCtx.getConfig<ObsidianConfig>();
           const c = new ObsidianClient(cfg.port ?? 27123, cfg.apiKey ?? "");
-          console.log("Testing connection to Obsidian Local REST API...");
+          console.info("Testing connection to Obsidian Local REST API...");
           const ok = await c.ping();
           if (ok) {
-            console.log("✓ Connected. Fetching vault root...");
+            console.info("✓ Connected. Fetching vault root...");
             const files = await c.list();
-            console.log(`✓ Vault contains ${files.length} item(s) at root.`);
+            console.info(`✓ Vault contains ${files.length} item(s) at root.`);
           } else {
             console.error("✗ Could not connect. Is Obsidian running with Local REST API enabled?");
             process.exit(1);
@@ -238,13 +238,13 @@ const plugin: WOPRPlugin = {
           const rl = createInterface({ input: process.stdin, output: process.stdout });
           const ask = (q: string) => new Promise<string>((r) => rl.question(q, r));
 
-          console.log("\n🪨  Obsidian Plugin Setup\n");
-          console.log("Step 1: Install Obsidian");
-          console.log("  macOS:   brew install obsidian");
-          console.log("  Others:  https://obsidian.md/download\n");
+          console.info("\n🪨  Obsidian Plugin Setup\n");
+          console.info("Step 1: Install Obsidian");
+          console.info("  macOS:   brew install obsidian");
+          console.info("  Others:  https://obsidian.md/download\n");
 
-          console.log("Step 2: Install the Local REST API plugin inside Obsidian");
-          console.log("  Settings → Community Plugins → Browse → 'Local REST API' → Install → Enable\n");
+          console.info("Step 2: Install the Local REST API plugin inside Obsidian");
+          console.info("  Settings → Community Plugins → Browse → 'Local REST API' → Install → Enable\n");
 
           const apiKey = await ask("Step 3: Paste your Local REST API key: ");
           const portStr = await ask("Port (default 27123): ");
@@ -252,7 +252,7 @@ const plugin: WOPRPlugin = {
 
           rl.close();
 
-          console.log("\nTesting connection...");
+          console.info("\nTesting connection...");
           const c = new ObsidianClient(port, apiKey.trim());
           const ok = await c.ping();
 
@@ -262,11 +262,11 @@ const plugin: WOPRPlugin = {
           }
 
           await cmdCtx.saveConfig({ ...cmdCtx.getConfig<ObsidianConfig>(), apiKey: apiKey.trim(), port });
-          console.log("✓ Connected and config saved. Run `wopr daemon restart` to activate.");
+          console.info("✓ Connected and config saved. Run `wopr daemon restart` to activate.");
           process.exit(0);
         }
 
-        console.log("Usage: wopr obsidian <setup|status|test>");
+        console.info("Usage: wopr obsidian <setup|status|test>");
         process.exit(sub ? 1 : 0);
       },
     },
